@@ -24,5 +24,6 @@ def gpt3(request):
         presence_penalty=0.8,
         stop=[" Human:", " AI:"],
     )
-    Line(text=response.choices[0].text).save()
+    next = Line(text=response.choices[0].text).save()
+    next.audio_url=
     return Response(response)

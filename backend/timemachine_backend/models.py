@@ -24,7 +24,9 @@ class Conversation(models.Model):
     notes = models.CharField(max_length=255, blank=True)
     is_favorite = models.BooleanField(default=False)
     date = models.DateField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="convos")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="convos", blank=True
+    )
     avatar = models.ForeignKey(
         Avatar, on_delete=models.CASCADE, related_name="avatar_convos"
     )

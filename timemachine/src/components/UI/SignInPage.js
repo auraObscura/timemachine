@@ -14,13 +14,13 @@ export default function SignInPage(props) {
       username: evt.target.elements["username"].value,
       password: evt.target.elements["password"].value,
     };
-    console.log("LOGIN INFO:", loginData);
 
     const data = await TimeMachineApi.login(loginData);
     if (data) {
       navigate("/dashboard");
     }
   };
+
   return (
     <>
       <div className="bg-stone-100 min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

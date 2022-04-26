@@ -1,4 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
+import { Link } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -9,6 +10,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import logo from "./time-machine2.png";
+import PollyApi from "../../api/PollyApi";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -20,20 +22,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
-      <div className="bg-stone-100">
+      <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -86,7 +80,7 @@ export default function Example() {
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                   <div className="flex-shrink-0 flex items-center px-4">
-                    <img className="h-8 w-auto" src={logo} alt="Workflow" />
+                    <img className="h-8 w-auto" src={logo} alt="Time Machine" />
                   </div>
                   <nav className="mt-5 px-2 space-y-1">
                     {navigation.map((item) => (
@@ -145,11 +139,11 @@ export default function Example() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
+          {/* Sidebar component */}
           <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
               <span className="flex items-center flex-shrink-0 px-4">
-                <img className="h-8 w-auto" src={logo} alt="Workflow" />
+                <img className="h-8 w-auto" src={logo} alt="Time Machine" />
               </span>
               <span className="flex items-center flex-shrink-0 px-4">
                 <h1 className="text-white font-extrabold">TimeMachine</h1>
@@ -191,11 +185,19 @@ export default function Example() {
                     />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-white">Tom Cook</p>
+                    <p className="text-sm font-medium text-white">Username</p>
                     <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">
                       View profile
                     </p>
                   </div>
+                  <span className="inline-flex rounded-md shadow">
+                    <Link
+                      to="/logout"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md bg-white hover:text-slate-700 text-slate-500"
+                    >
+                      Log out
+                    </Link>
+                  </span>
                 </div>
               </a>
             </div>

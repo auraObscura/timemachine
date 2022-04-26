@@ -11,25 +11,28 @@ from timemachine_backend.serializers import (
 
 # internal model views
 class ConversationViewSet(viewsets.ModelViewSet):
-    queryset = Conversation.objects.all()
+    # queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         return super().perform_create(serializer)
 
+    def get_queryset(self):
+        return Conversation.objects.filter(user=self.request.user)
+
 
 class LineViewSet(viewsets.ModelViewSet):
-    queryset = Line.objects.all()
+    # queryset = Line.objects.all()
     serializer_class = LineSerializer
+
+    def get_queryset(self):
+        return Line.objects.filter(conversation=self.request.body)
 
 
 class AvatarViewSet(viewsets.ModelViewSet):
     queryset = Avatar.objects.all()
     serializer_class = AvatarSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
 
 
 class UserViewSet(viewsets.ModelViewSet):

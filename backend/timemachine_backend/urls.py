@@ -1,6 +1,5 @@
 from rest_framework import routers
 from django.urls import path, include
-
 from timemachine_backend.views_auth import handle_login, handle_logout
 from timemachine_backend.views import (
     ConversationViewSet,
@@ -9,7 +8,7 @@ from timemachine_backend.views import (
     UserViewSet,
 )
 from timemachine_backend.gpt3 import gpt3
-from timemachine_backend.aws_api import test
+from timemachine_backend.aws_api import synthesize
 
 r = routers.DefaultRouter()
 r.register("conversations", ConversationViewSet, basename="conversation")
@@ -22,5 +21,5 @@ urlpatterns = [
     path("login/", handle_login),
     path("logout/", handle_logout),
     path("generate/", gpt3, name="generate"),
-    path("speech/", test, name="speech"),
+    path("speech/", synthesize, name="speech"),
 ]

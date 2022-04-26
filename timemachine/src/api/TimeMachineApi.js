@@ -10,10 +10,22 @@ TimeMachineApi.login = async (loginData) => {
   );
 };
 
-// backend
-TimeMachineApi.getAvatars = async () => {
+TimeMachineApi.register = async (registerData) => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.get(`${BASE_URL}/avatars/`)
+    axios.post(`${BASE_URL}/users/`, registerData)
+  );
+};
+
+// backend
+TimeMachineApi.getAllAvatars = async () => {
+  return await apiHelpers.tryCatchFetch(() =>
+    axios.get(`${BASE_URL}/avatars/`, apiHelpers.getCsrfConfig())
+  );
+};
+
+TimeMachineApi.getUserConversations = async () => {
+  return await apiHelpers.tryCatchFetch(() =>
+    axios.get(`${BASE_URL}/conversations/`, apiHelpers.getCsrfConfig())
   );
 };
 
