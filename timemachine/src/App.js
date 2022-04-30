@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 // pages
 import LandingPage from "./components/pages/LandingPage";
 import SignInPage from "./components/pages/SignInPage";
@@ -27,6 +27,7 @@ function App() {
             <DashboardPage username={username} setUsername={setUsername} />
           }
         >
+          <Route path="all-avatars" element={<Avatars />} />
           <Route path="all-avatars" element={<Avatars />} />
         </Route>
       </Routes>

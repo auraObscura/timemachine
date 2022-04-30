@@ -33,7 +33,7 @@ const AvatarCard = (props) => {
       </div>
       <div>
         <div className="-mt-px flex">
-          <form action="" method="post" onSubmit={convoHandler}>
+          <form action="" onSubmit={convoHandler}>
             <input type="hidden" name="id" value={props.avatar.id} />
             <div className="w-0 flex-1 flex">
               {/* <Link

@@ -5,11 +5,9 @@ import AvatarCard from "./UI/AvatarCard";
 const Avatars = (props) => {
   const [avatarList, setAvatarList] = useState([]);
 
-  useEffect =
-    (() => {
-      loadAvatars();
-    },
-    []);
+  useEffect(() => {
+    loadAvatars();
+  }, []);
 
   const loadAvatars = async () => {
     const data = await TimeMachineApi.getAllAvatars();
@@ -18,9 +16,7 @@ const Avatars = (props) => {
 
   const renderAvatars = () => {
     avatarList.map((avatar) => {
-      const avatarCards = [];
-      avatarCards.push(<AvatarCard key={avatar.id} avatar={avatar} />);
-      return avatarCards;
+      return <AvatarCard avatar={avatar} />;
     });
   };
 
