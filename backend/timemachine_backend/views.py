@@ -11,6 +11,7 @@ from timemachine_backend.serializers import (
 
 # internal model views
 class ConversationViewSet(viewsets.ModelViewSet):
+    # permission_classes = [permissions.IsAuthenticated]
     # queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
 
@@ -23,11 +24,11 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
 
 class LineViewSet(viewsets.ModelViewSet):
-    # queryset = Line.objects.all()
+    queryset = Line.objects.all()
     serializer_class = LineSerializer
 
-    def get_queryset(self):
-        return Line.objects.filter(conversation=self.request.body)
+    # def get_queryset(self):
+    #     return Line.objects.filter(conversation=self.request.id)
 
 
 class AvatarViewSet(viewsets.ModelViewSet):

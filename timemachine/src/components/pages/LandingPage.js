@@ -1,16 +1,25 @@
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import MyAtropos from "./MyAtropos";
+import MyAtropos from "../UI/MyAtropos";
 import logo from "./time-machine2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import TimeMachineApi from "../../api/TimeMachineApi";
 
 const navigation = [
-  { name: "About", href: "#" },
-  { name: "Sign Up", href: "#/register" },
+  { name: "About", href: "about" },
+  { name: "Sign Up", href: "register" },
 ];
 
-const HomePage = () => {
+const LandingPage = (props) => {
+  const nav = useNavigate();
+  // const handleLogin = async () => {
+  //   const data = await TimeMachineApi.login();
+  //   if (data) {
+  //     props.setUsername("");
+  //     nav("/");
+  //   }
+  // };
   return (
     <div className="bg-stone-100">
       <div className="relative overflow-hidden">
@@ -106,13 +115,13 @@ const HomePage = () => {
                 </div>
                 <div className="hidden md:flex md:space-x-10">
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       className="font-medium text-gray-500 hover:text-gray-900"
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
@@ -174,7 +183,6 @@ const HomePage = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
-
           <div className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24 sm:px-6">
             <div className="text-center">
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
@@ -198,52 +206,9 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="bg-gray-800">
-        {/* <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-          <h2 className="text-center text-gray-400 text-sm font-semibold uppercase tracking-wide">
-            Trusted by over 26,000 forward-thinking companies
-          </h2>
-          <div className="mt-8 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
-            <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-              <img
-                className="h-12"
-                src="https://tailwindui.com/img/logos/tuple-logo-gray-400.svg"
-                alt="Tuple"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-              <img
-                className="h-12"
-                src="https://tailwindui.com/img/logos/mirage-logo-gray-400.svg"
-                alt="Mirage"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-              <img
-                className="h-12"
-                src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg"
-                alt="StaticKit"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center md:col-span-3 lg:col-span-1">
-              <img
-                className="h-12"
-                src="https://tailwindui.com/img/logos/transistor-logo-gray-400.svg"
-                alt="Transistor"
-              />
-            </div>
-            <div className="col-span-2 flex justify-center md:col-span-3 lg:col-span-1">
-              <img
-                className="h-12"
-                src="https://tailwindui.com/img/logos/workcation-logo-gray-400.svg"
-                alt="Workcation"
-              />
-            </div>
-          </div>
-        </div> */}
-      </div>
+      <div className="bg-gray-800"></div>
     </div>
   );
 };
 
-export default HomePage;
+export default LandingPage;

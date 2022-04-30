@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiHelpers from "./apiHelpers";
 
 const Gpt3Api = {};
 const URL = "http://localhost:8000/api/generate/";

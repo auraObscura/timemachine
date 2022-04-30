@@ -2,12 +2,17 @@ import Cookie from "js-cookie";
 
 const apiHelpers = {};
 
+// apiHelpers.getUserToken = () => {
+//   return;
+// };
+
 //added for auth
 apiHelpers.getCsrfConfig = () => {
   return {
     withCredentials: true,
     headers: {
       "X-CSRFToken": Cookie.get("csrftoken"),
+      Authorization: Cookie.get("jwt-auth"),
     },
   };
 };

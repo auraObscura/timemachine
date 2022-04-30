@@ -1,5 +1,4 @@
 import json
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 
@@ -12,7 +11,6 @@ def bad_request():
     return error_on_request("bad request")
 
 
-@csrf_exempt
 def handle_login(request):
     try:
         if request.method == "POST":
@@ -32,11 +30,10 @@ def handle_login(request):
     return bad_request()
 
 
-@csrf_exempt
 def handle_logout(request):
     try:
         if request.method == "POST":
-            logout(request.user)
+            logout(request)
             return JsonResponse(data={"success": "you have logged out!"}, status=200)
 
     except Exception as e:

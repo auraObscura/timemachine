@@ -17,6 +17,7 @@ export default function SignInPage(props) {
 
     const data = await TimeMachineApi.login(loginData);
     if (data) {
+      props.setUsername(loginData.username);
       navigate("/dashboard");
     }
   };

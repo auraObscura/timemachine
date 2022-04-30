@@ -18,8 +18,6 @@ r.register("users", UserViewSet, basename="user")
 
 urlpatterns = [
     path("", include(r.urls)),
-    path("login/", handle_login),
-    path("logout/", handle_logout),
     path("generate/", gpt3, name="generate"),
     path("speech/", synthesize, name="speech"),
 ]

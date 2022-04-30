@@ -20,4 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("timemachine_backend.urls")),
     path("api-auth/", include("rest_framework.urls")),
+    path("dj-rest-auth/", include("dj_rest_auth.urls")),
 ]

@@ -6,19 +6,29 @@ from timemachine_backend.models import Conversation, Line, Avatar, User
 class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
-        fields = ["notes", "is_favorite", "date", "user", "avatar", "lines"]
+        fields = ["id", "notes", "is_favorite", "date", "user", "avatar", "lines"]
 
 
 class LineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Line
-        fields = ["text", "time", "is_favorite", "conversation", "audio_url"]
+        fields = [
+            "id",
+            "input_text",
+            "output_text",
+            "time",
+            "is_favorite",
+            "conversation",
+            "audio_url",
+        ]
 
 
 class AvatarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Avatar
         fields = [
+            "id",
+            "name",
             "starting_prompt",
             "voice",
             "avatar_img",

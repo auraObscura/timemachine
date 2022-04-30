@@ -15,9 +15,14 @@ class Avatar(models.Model):
         ("Matthew", "Matthew"),
         ("Brian", "Brian"),
     ]
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
     starting_prompt = models.TextField()
     voice = models.CharField(max_length=50, choices=VOICE_CHOICES)
     avatar_img = models.ImageField(blank=True, upload_to="avatars")
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Conversation(models.Model):
@@ -31,12 +36,19 @@ class Conversation(models.Model):
         Avatar, on_delete=models.CASCADE, related_name="avatar_convos"
     )
 
+    def __str__(self):
+        return f"{self.avatar} on {self.date}"
+
 
 class Line(models.Model):
-    text = models.TextField()
+    input_text = models.TextField()
+    output_text = models.TextField()
     time = models.TimeField(auto_now_add=True)
     is_favorite = models.BooleanField(default=False)
     conversation = models.ForeignKey(
-        Conversation, on_delete=models.CASCADE, related_name="lines"
+        Conversation, on_delete=models.CASCADE, related_name="lines", blank=True
     )
     audio_url = models.URLField(blank=True)
+
+    def __str__(self):
+        return f"{self.output_text}"

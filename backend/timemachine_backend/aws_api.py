@@ -1,19 +1,20 @@
-"""Getting Started Example for Python 2.7+/3.3+"""
 from boto3 import Session
 from botocore.exceptions import BotoCoreError, ClientError
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from contextlib import closing
-import sys
-import subprocess
-from tempfile import gettempdir
+
+# from contextlib import closing
+# import sys
+# import subprocess
+# from tempfile import gettempdir
 from django.views.decorators.csrf import csrf_exempt
 
 MY_BUCKET = "timemachine-tts-output"
 
 
-@csrf_exempt
-@api_view(http_method_names=["GET", "POST"])
-def synthesize(request):
+# @csrf_exempt
+@api_view(http_method_names=["POST"])
+def synthesize(request, output_text):
     session = Session(profile_name="default")
     polly = session.client("polly")
 
@@ -21,9 +22,8 @@ def synthesize(request):
         Engine="neural",
         OutputFormat="mp3",
         OutputS3BucketName=MY_BUCKET,
+        Text=output_text,
         OutputS3KeyPrefix="test",
-        #   SnsTopicArn='string',
-        Text="this is a test",
         VoiceId="Matthew",
     )
     # except (BotoCoreError, ClientError) as error:
@@ -31,6 +31,8 @@ def synthesize(request):
     #     sys.exit(-1)
 
     print(response.OutputUri)
+
+    return Response(response)
 
     # try:
     #     # Request speech synthesis
