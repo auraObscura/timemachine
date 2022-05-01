@@ -3,7 +3,23 @@ from django.contrib.auth.hashers import make_password
 from timemachine_backend.models import Conversation, Line, Avatar, User
 
 
+class AvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Avatar
+        fields = [
+            "id",
+            "name",
+            "description",
+            "starting_prompt",
+            "voice",
+            "avatar_img",
+            "avatar_convos",
+        ]
+
+
 class ConversationSerializer(serializers.ModelSerializer):
+    avatar = AvatarSerializer()
+
     class Meta:
         model = Conversation
         fields = ["id", "notes", "is_favorite", "date", "user", "avatar", "lines"]
@@ -20,19 +36,6 @@ class LineSerializer(serializers.ModelSerializer):
             "is_favorite",
             "conversation",
             "audio_url",
-        ]
-
-
-class AvatarSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Avatar
-        fields = [
-            "id",
-            "name",
-            "starting_prompt",
-            "voice",
-            "avatar_img",
-            "avatar_convos",
         ]
 
 

@@ -13,7 +13,7 @@ djangorestframework = "*"
 django-cors-headers = "*"
 django-environ = "*"
 pillow = "*"
-dj-rest-auth = "*"
+dj-rest-auth = {extras = ["with_social"], version = "*"}
 djangorestframework-simplejwt = "*"
 
 [dev-packages]

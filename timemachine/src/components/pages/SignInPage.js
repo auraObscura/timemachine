@@ -18,6 +18,9 @@ export default function SignInPage(props) {
     const data = await TimeMachineApi.login(loginData);
     if (data) {
       props.setUsername(loginData.username);
+      props.setUserId(data.user.pk);
+      sessionStorage.setItem("access_token", data.access_token);
+      sessionStorage.setItem("user", data.user);
       navigate("/dashboard");
     }
   };

@@ -12,7 +12,8 @@ export default function SignUpPage() {
 
     let registerData = {
       username: evt.target.elements["username"].value,
-      password: evt.target.elements["password"].value,
+      password1: evt.target.elements["password1"].value,
+      password2: evt.target.elements["password2"].value,
       convos: [],
     };
 
@@ -53,17 +54,30 @@ export default function SignUpPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label htmlFor="password1" className="sr-only">
                 Password
               </label>
               <input
-                id="password"
-                name="password"
+                id="password1"
+                name="password1"
                 type="password"
                 autoComplete="current-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <input
+                id="password2"
+                name="password2"
+                type="password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Password (again)"
               />
             </div>
           </div>

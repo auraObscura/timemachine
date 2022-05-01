@@ -2,9 +2,7 @@ import Cookie from "js-cookie";
 
 const apiHelpers = {};
 
-// apiHelpers.getUserToken = () => {
-//   return;
-// };
+let token = Cookie.get("sessionid");
 
 //added for auth
 apiHelpers.getCsrfConfig = () => {
@@ -12,7 +10,7 @@ apiHelpers.getCsrfConfig = () => {
     withCredentials: true,
     headers: {
       "X-CSRFToken": Cookie.get("csrftoken"),
-      Authorization: Cookie.get("jwt-auth"),
+      // Authorization: `${token}`,
     },
   };
 };

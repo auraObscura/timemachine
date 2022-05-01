@@ -4,6 +4,7 @@ import AvatarCard from "./UI/AvatarCard";
 
 const Avatars = (props) => {
   const [avatarList, setAvatarList] = useState([]);
+  let avatarId = null;
 
   useEffect(() => {
     loadAvatars();
@@ -15,12 +16,22 @@ const Avatars = (props) => {
   };
 
   const renderAvatars = () => {
-    avatarList.map((avatar) => {
-      return <AvatarCard avatar={avatar} />;
+    return avatarList.map((avatar) => {
+      avatarId = avatar.id;
+      return <AvatarCard key={avatarId} avatar={avatar} />;
     });
   };
 
-  return <div>{renderAvatars()}</div>;
+  return (
+    <div>
+      <ul
+        role="list"
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      >
+        {renderAvatars()}
+      </ul>
+    </div>
+  );
 };
 
 export default Avatars;

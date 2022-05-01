@@ -11,16 +11,25 @@ from timemachine_backend.serializers import (
 
 # internal model views
 class ConversationViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]
-    # queryset = Conversation.objects.all()
+    http_method_names = ["get", "post", "delete"]
+    queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         return super().perform_create(serializer)
 
-    def get_queryset(self):
-        return Conversation.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     auth = self.request.auth
+    #     print(auth)
+    #     if user.is_authenticated:
+    #         return Conversation.objects.filter(user=user.pk)
+
+    def get_permissions(self):
+        if self.request.method == "GET" or "DELETE":
+            return (permissions.AllowAny(),)
+        return (permissions.IsAuthenticated(),)
 
 
 class LineViewSet(viewsets.ModelViewSet):
@@ -34,6 +43,11 @@ class LineViewSet(viewsets.ModelViewSet):
 class AvatarViewSet(viewsets.ModelViewSet):
     queryset = Avatar.objects.all()
     serializer_class = AvatarSerializer
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return (permissions.AllowAny(),)
+        return (permissions.IsAdminUser(),)
 
 
 class UserViewSet(viewsets.ModelViewSet):

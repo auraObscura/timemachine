@@ -1,13 +1,11 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 /* images */
 import {
   ChatIcon,
   HomeIcon,
   MenuIcon,
   UsersIcon,
-  LogoutIcon,
-  XIcon,
 } from "@heroicons/react/outline";
 import logo from "./time-machine2.png";
 /* internal api calls */
@@ -17,7 +15,7 @@ import PollyApi from "../../api/PollyApi";
 import Gpt3Api from "../../api/Gpt3Api";
 
 const navigation = [
-  { name: "Dashboard", href: "#/dashboard", icon: HomeIcon, current: true },
+  { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: true },
   {
     name: "Avatars",
     href: "all-avatars",
@@ -44,6 +42,7 @@ export default function DashboardPage(props) {
     const data = await TimeMachineApi.logout();
     if (data) {
       props.setUsername("");
+      sessionStorage.clear();
       nav("/");
     }
   };
@@ -67,6 +66,7 @@ export default function DashboardPage(props) {
                   <Link
                     key={item.name}
                     to={item.href}
+                    onClick={item.current}
                     className={classNames(
                       item.current
                         ? "bg-gray-900 text-white"
@@ -91,26 +91,31 @@ export default function DashboardPage(props) {
             <div className="flex-shrink-0 flex bg-gray-700 p-4">
               <span className="flex-shrink-0 w-full group block">
                 <div className="flex items-center">
-                  <div>
-                    <img
-                      className="inline-block h-9 w-9 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
+                  <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                    <svg
+                      className="h-full w-full text-gray-300"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </span>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-white">
                       {props.username}
                     </p>
-                    <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">
+                    <Link
+                      to="#"
+                      className="text-xs font-medium text-gray-300 group-hover:text-gray-200"
+                    >
                       View profile
-                    </p>
+                    </Link>
                   </div>
-                  <span className="inline-flex rounded-md shadow">
+                  <span className="px-1 inline-flex rounded-md shadow">
                     <Link
                       to="/"
                       onClick={handleLogout}
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md bg-white hover:text-slate-700 text-slate-500"
+                      className="items-center ml-5  px-2 py-2 border border-transparent text-xs font-medium rounded-md bg-white hover:text-slate-700 text-slate-500"
                     >
                       Log out
                     </Link>
@@ -137,6 +142,7 @@ export default function DashboardPage(props) {
                 <h1 className="text-2xl font-semibold text-gray-900">
                   Dashboard
                 </h1>
+                <hr className="pb-4" />
               </div>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <Outlet />
