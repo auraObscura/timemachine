@@ -16,6 +16,7 @@ class Avatar(models.Model):
         ("Brian", "Brian"),
     ]
     name = models.CharField(max_length=50)
+    life = models.CharField(max_length=50, blank=True)
     description = models.TextField(blank=True)
     starting_prompt = models.TextField()
     voice = models.CharField(max_length=50, choices=VOICE_CHOICES)
@@ -42,7 +43,7 @@ class Conversation(models.Model):
 
 class Line(models.Model):
     input_text = models.TextField()
-    output_text = models.TextField()
+    output_text = models.TextField(blank=True)
     time = models.TimeField(auto_now_add=True)
     is_favorite = models.BooleanField(default=False)
     conversation = models.ForeignKey(
@@ -54,4 +55,4 @@ class Line(models.Model):
     audio_url = models.URLField(blank=True)
 
     def __str__(self):
-        return f"{self.output_text}"
+        return f"{self.input_text}\n{self.output_text}"

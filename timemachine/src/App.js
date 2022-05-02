@@ -31,15 +31,12 @@ function App() {
         <Route
           path="dashboard/*"
           element={
-            <DashboardPage
-              username={username}
-              setUsername={setUsername}
-              setUserId={setUserId}
-            />
+            <DashboardPage setUsername={setUsername} username={username} />
           }
         >
-          <Route path="all-avatars" element={<Avatars />} />
-          <Route path="avatars/:id" element={<Avatar />} />
+          <Route path="avatars" element={<Avatars />}>
+            <Route path=":id" element={<Avatar />} />
+          </Route>
           <Route
             path="convo-history"
             element={<ConvoHistory userId={userId} />}

@@ -1,6 +1,7 @@
-import { Fragment } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { TrashIcon, DotsVerticalIcon, StarIcon } from "@heroicons/react/solid";
 import TimeMachineApi from "../../api/TimeMachineApi";
 
@@ -9,8 +10,12 @@ function classNames(...classes) {
 }
 const ConvoHistoryCard = (props) => {
   let id = props.convo.id;
+  const [isFavorite, setIsFavorite] = useState(false);
   const deleteHandler = async () => {
-    await TimeMachineApi.deleteConversation(id);
+    return await TimeMachineApi.deleteConversation(id);
+  };
+  const favoriteHandler = () => {
+    setIsFavorite(!isFavorite);
   };
 
   return (
@@ -20,12 +25,15 @@ const ConvoHistoryCard = (props) => {
           <img
             className="h-10 w-10 rounded-full"
             src={props.avatar.avatar_img}
-            alt="Avatar"
+            alt={props.avatar.name}
           />
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-gray-900">
-            <Link to={`conversations/${id}`} className="hover:underline">
+            <Link
+              to={`/dashboard/conversations/${id}`}
+              className="hover:underline"
+            >
               {props.avatar.name}
             </Link>
           </p>
@@ -60,6 +68,7 @@ const ConvoHistoryCard = (props) => {
                     {({ active }) => (
                       <Link
                         to="#"
+                        onClick={favoriteHandler}
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -67,10 +76,17 @@ const ConvoHistoryCard = (props) => {
                           "flex px-4 py-2 text-sm"
                         )}
                       >
-                        <StarIcon
-                          className="mr-3 h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        {!isFavorite ? (
+                          <MdFavoriteBorder
+                            className="mr-3 h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <MdFavorite
+                            className="mr-3 h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        )}
                         <span>Add to favorites</span>
                       </Link>
                     )}

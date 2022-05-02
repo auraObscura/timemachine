@@ -1,3 +1,4 @@
+from pprint import pprint
 from rest_framework import viewsets, permissions
 
 from timemachine_backend.models import Conversation, Line, Avatar, User
@@ -17,13 +18,21 @@ class ConversationViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
         return super().perform_create(serializer)
 
+    def perform_update(self, serializer):
+        print(serializer.validated_data.is_favorite)
+        # serializer.save(is_favorite=)
+        return super().perform_update(serializer)
+
     def get_queryset(self):
         return Conversation.objects.filter(user=self.request.user)
 
 
 class LineViewSet(viewsets.ModelViewSet):
-    queryset = Line.objects.all()
     serializer_class = LineSerializer
+
+    def get_queryset(self):
+        pprint(self.request.query_params)
+        return Line.objects.filter(conversation=self.request.data)
 
 
 class AvatarViewSet(viewsets.ModelViewSet):

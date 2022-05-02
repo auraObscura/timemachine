@@ -1,7 +1,5 @@
 import apiHelpers from "./apiHelpers";
 import axios from "axios";
-import Cookie from "js-cookie";
-import { useState } from "react";
 
 const TimeMachineApi = {};
 const TOKEN_BASE = "http://localhost:8000/dj-rest-auth";
@@ -55,8 +53,29 @@ TimeMachineApi.getUserConversations = async () => {
   );
 };
 
-TimeMachineApi.getConversationLines = async () => {
-  return await apiHelpers.tryCatchFetch(() => axios.get(`${BASE_URL}/lines/`));
+TimeMachineApi.getConversationLines = async (id) => {
+  return await apiHelpers.tryCatchFetch(() =>
+    axios.get(
+      `${BASE_URL}/conversations/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+        data: { id: id },
+      },
+      apiHelpers.getCsrfConfig()
+    )
+  );
+};
+
+TimeMachineApi.setFavoriteConvo = async (id) => {
+  return await apiHelpers.tryCatchFetch(() =>
+    axios.patch(
+      `${BASE_URL}/conversations/${id}/`,
+      { is_favorite: { is_favorite: true } },
+      apiHelpers.getCsrfConfig()
+    )
+  );
 };
 
 TimeMachineApi.newConversation = async (avatarId) => {

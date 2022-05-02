@@ -10,6 +10,7 @@ class AvatarSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "life",
             "description",
             "starting_prompt",
             "voice",
@@ -18,6 +19,7 @@ class AvatarSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             "name",
+            "life",
             "description",
             "starting_prompt",
             "voice",
@@ -66,6 +68,7 @@ class ConversationSerializer(WritableNestedModelSerializer):
             "avatar",
             "lines",
         ]
+        depth = 1
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import TimeMachineApi from "../api/TimeMachineApi";
 import AvatarCard from "./UI/AvatarCard";
 
@@ -30,6 +31,7 @@ const Avatars = (props) => {
       >
         {renderAvatars()}
       </ul>
+      <Outlet />
     </div>
   );
 };

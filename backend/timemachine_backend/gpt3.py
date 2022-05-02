@@ -12,24 +12,21 @@ openai.api_key = env("OPENAI_API_KEY")
 
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
-# pass convo id and user line text
-# def get_user_id(request):
-#     (self.request.user)
 
 
 @api_view(http_method_names=["POST"])
 def gpt3(request):
     id = request.data.get("id")
-    conversation = Conversation.objects.get(id)
+    conversation = Conversation.objects.get(id=id)
     user_text = request.data.get("user_text")
     prompt = conversation.avatar.starting_prompt
-    for line in conversation.lines:
-        prompt += line.input_text
-        prompt += user_text
+    if conversation.lines == []:
+        Line(input_text=prompt, conversation=conversation).save()
+    prompt += user_text
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
-        user=1,
+        user=str(request.user.id),
         temperature=0.95,
         max_tokens=250,
         top_p=1,
@@ -37,10 +34,11 @@ def gpt3(request):
         presence_penalty=0.8,
         stop=[" Human:", " AI:"],
     )
+    output_text = response.choices[0].text
     next = Line(
-        output_text=response.choices[0].text,
         input_text=user_text,
-        conversation=conversation.id,
+        output_text=output_text,
+        conversation=conversation,
     ).save()
-    next.audio_url = synthesize(user_text)
+    synthesize(request, output_text)
     return Response(response)

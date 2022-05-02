@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ChatAltIcon, InformationCircleIcon } from "@heroicons/react/outline";
+import { ChatAltIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import TimeMachineApi from "../../api/TimeMachineApi";
 
 const AvatarCard = (props) => {
   const nav = useNavigate();
   const convoHandler = async () => {
     const data = await TimeMachineApi.newConversation(props.avatar.id);
-    nav("conversations/:id");
+    nav(`/dashboard/conversations/${data.id}`);
   };
   return (
     <li className="col-span-1 flex flex-col text-center bg-stone-200 rounded-lg shadow divide-y divide-gray-400">
@@ -14,7 +14,7 @@ const AvatarCard = (props) => {
         <img
           className="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
           src={props.avatar.avatar_img}
-          alt="Avatar Image"
+          alt={props.avatar.name}
         />
         <h3 className="mt-6 text-gray-900 text-sm font-medium">
           {props.avatar.name}
@@ -25,7 +25,7 @@ const AvatarCard = (props) => {
           <dt className="sr-only">Voice</dt>
           <dd className="mt-3">
             <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-              {props.avatar.description}
+              {props.avatar.life}
             </span>
           </dd>
         </dl>
@@ -45,7 +45,7 @@ const AvatarCard = (props) => {
         </div>
         <div className="-ml-px w-0 flex-1 flex">
           <Link
-            to="avatars/:id"
+            to={`${props.avatar.id}`}
             className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
           >
             <InformationCircleIcon

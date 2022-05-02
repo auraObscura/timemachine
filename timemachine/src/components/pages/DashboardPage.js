@@ -11,14 +11,12 @@ import logo from "./time-machine2.png";
 /* internal api calls */
 import TimeMachineApi from "../../api/TimeMachineApi";
 /* 3rd party api calls */
-import PollyApi from "../../api/PollyApi";
-import Gpt3Api from "../../api/Gpt3Api";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: true },
   {
     name: "Avatars",
-    href: "all-avatars",
+    href: "avatars",
     icon: UsersIcon,
     current: false,
   },

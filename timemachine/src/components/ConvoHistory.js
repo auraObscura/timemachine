@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import TimeMachineApi from "../api/TimeMachineApi";
 import ConvoHistoryCard from "./UI/ConvoHistoryCard";
 
 const ConvoHistory = (props) => {
   const [convoList, setConvoList] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     loadConvos();
