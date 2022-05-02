@@ -38,13 +38,11 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        # "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
-        #     # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
 }
 # Application definition
@@ -58,9 +56,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "timemachine_backend",
     "rest_framework",
+    "dj_rest_auth",
     "rest_framework.authtoken",
     "corsheaders",
-    "dj_rest_auth",
     "django.contrib.sites",
     "allauth",
     "allauth.account",

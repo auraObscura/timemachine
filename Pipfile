@@ -15,6 +15,7 @@ django-environ = "*"
 pillow = "*"
 dj-rest-auth = {extras = ["with_social"], version = "*"}
 djangorestframework-simplejwt = "*"
+drf-writable-nested = "*"
 
 [dev-packages]
 

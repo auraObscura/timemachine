@@ -46,7 +46,10 @@ class Line(models.Model):
     time = models.TimeField(auto_now_add=True)
     is_favorite = models.BooleanField(default=False)
     conversation = models.ForeignKey(
-        Conversation, on_delete=models.CASCADE, related_name="lines", blank=True
+        Conversation,
+        on_delete=models.CASCADE,
+        related_name="lines",
+        blank=True,
     )
     audio_url = models.URLField(blank=True)
 

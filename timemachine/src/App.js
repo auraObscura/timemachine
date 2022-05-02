@@ -8,7 +8,9 @@ import DashboardPage from "./components/pages/DashboardPage";
 import AboutPage from "./components/pages/AboutPage";
 // components
 import Avatars from "./components/Avatars";
+import Avatar from "./components/Avatar";
 import ConvoHistory from "./components/ConvoHistory";
+import Conversation from "./components/Conversation";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -27,19 +29,24 @@ function App() {
           }
         />
         <Route
-          path="/dashboard/*"
+          path="dashboard/*"
           element={
-            <DashboardPage username={username} setUsername={setUsername} />
+            <DashboardPage
+              username={username}
+              setUsername={setUsername}
+              setUserId={setUserId}
+            />
           }
         >
           <Route path="all-avatars" element={<Avatars />} />
+          <Route path="avatars/:id" element={<Avatar />} />
           <Route
             path="convo-history"
             element={<ConvoHistory userId={userId} />}
           />
           <Route
             path="conversations/:id"
-            element={<ConvoHistory userId={userId} />}
+            element={<Conversation userId={userId} />}
           />
         </Route>
       </Routes>

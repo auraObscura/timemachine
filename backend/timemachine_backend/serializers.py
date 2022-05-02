@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 from django.contrib.auth.hashers import make_password
 from timemachine_backend.models import Conversation, Line, Avatar, User
 
@@ -15,14 +16,15 @@ class AvatarSerializer(serializers.ModelSerializer):
             "avatar_img",
             "avatar_convos",
         ]
-
-
-class ConversationSerializer(serializers.ModelSerializer):
-    avatar = AvatarSerializer()
-
-    class Meta:
-        model = Conversation
-        fields = ["id", "notes", "is_favorite", "date", "user", "avatar", "lines"]
+        read_only_fields = [
+            "name",
+            "description",
+            "starting_prompt",
+            "voice",
+            "avatar_img",
+            "avatar_convos",
+        ]
+        depth = 1
 
 
 class LineSerializer(serializers.ModelSerializer):
@@ -36,6 +38,33 @@ class LineSerializer(serializers.ModelSerializer):
             "is_favorite",
             "conversation",
             "audio_url",
+        ]
+        read_only_fields = [
+            "id",
+            "input_text",
+            "output_text",
+            "time",
+            "is_favorite",
+            "conversation",
+            "audio_url",
+        ]
+        depth = 1
+
+
+class ConversationSerializer(WritableNestedModelSerializer):
+    avatar = AvatarSerializer()
+
+    class Meta:
+        model = Conversation
+        fields = ["id", "notes", "is_favorite", "date", "user", "avatar", "lines"]
+        read_only_fields = [
+            "id",
+            "notes",
+            "is_favorite",
+            "date",
+            "user",
+            "avatar",
+            "lines",
         ]
 
 

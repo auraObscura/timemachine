@@ -19,6 +19,8 @@ export default function SignUpPage() {
 
     const data = await TimeMachineApi.register(registerData);
     if (data) {
+      sessionStorage.setItem("access_token", data.access_token);
+      sessionStorage.setItem("user", data.user);
       navigate("/login");
     }
   };

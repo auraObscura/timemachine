@@ -2,7 +2,6 @@ import openai
 import environ
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.request import Request
 
 from timemachine_backend.aws_api import synthesize
 from .models import Conversation, Line
@@ -20,8 +19,8 @@ restart_sequence = "\nHuman: "
 
 @api_view(http_method_names=["POST"])
 def gpt3(request):
-    request.data.get("id")
-    conversation = Conversation.objects.get(request.data.get("id"))
+    id = request.data.get("id")
+    conversation = Conversation.objects.get(id)
     user_text = request.data.get("user_text")
     prompt = conversation.avatar.starting_prompt
     for line in conversation.lines:

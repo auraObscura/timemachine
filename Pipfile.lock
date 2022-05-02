@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f1b3880b96b397afd6a755c69fb8e6a692833087ef7beccded8fcdc2e636a2e4"
+            "sha256": "267869099c6591aab189dd0f2b959a3abad69789f3ec33aeb7d20c87a3596dc3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -237,6 +237,13 @@
             ],
             "index": "pypi",
             "version": "==5.1.0"
+        },
+        "drf-writable-nested": {
+            "hashes": [
+                "sha256:b96d30aca953f4dba313bb5697da4022470dc63fb2dbe68c93d38d389ec63ac2"
+            ],
+            "index": "pypi",
+            "version": "==0.6.3"
         },
         "et-xmlfile": {
             "hashes": [

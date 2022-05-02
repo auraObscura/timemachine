@@ -1,13 +1,11 @@
 import apiHelpers from "./apiHelpers";
 import axios from "axios";
 import Cookie from "js-cookie";
+import { useState } from "react";
 
 const TimeMachineApi = {};
 const TOKEN_BASE = "http://localhost:8000/dj-rest-auth";
 const BASE_URL = "http://localhost:8000/api";
-let token = Cookie.get("sessionid");
-let user = localStorage.getItem("user");
-const userData = { id: user.pk };
 
 // auth
 TimeMachineApi.login = async (loginData) => {
@@ -18,7 +16,7 @@ TimeMachineApi.login = async (loginData) => {
 
 TimeMachineApi.logout = async () => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.post(`${TOKEN_BASE}/logout/`, null, apiHelpers.getCsrfConfig())
+    axios.post(`${TOKEN_BASE}/logout/`, apiHelpers.getCsrfConfig())
   );
 };
 
@@ -33,8 +31,11 @@ TimeMachineApi.getAllAvatars = async () => {
   return await apiHelpers.tryCatchFetch(() =>
     axios.get(
       `${BASE_URL}/avatars/`,
-      // { headers: { Authorization: `Bearer ${token}` } },
-      null,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      },
       apiHelpers.getCsrfConfig()
     )
   );
@@ -42,7 +43,15 @@ TimeMachineApi.getAllAvatars = async () => {
 
 TimeMachineApi.getUserConversations = async () => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.get(`${BASE_URL}/conversations/`, null, apiHelpers.getCsrfConfig())
+    axios.get(
+      `${BASE_URL}/conversations/`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      },
+      apiHelpers.getCsrfConfig()
+    )
   );
 };
 
@@ -54,7 +63,7 @@ TimeMachineApi.newConversation = async (avatarId) => {
   return await apiHelpers.tryCatchFetch(() =>
     axios.post(
       `${BASE_URL}/conversations/`,
-      { avatar: { id: avatarId }, lines: [] },
+      { avatar: { id: avatarId } },
       apiHelpers.getCsrfConfig()
     )
   );
@@ -64,7 +73,11 @@ TimeMachineApi.deleteConversation = async (convoId) => {
   return await apiHelpers.tryCatchFetch(() =>
     axios.delete(
       `${BASE_URL}/conversations/${convoId}`,
-      null,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      },
       apiHelpers.getCsrfConfig()
     )
   );

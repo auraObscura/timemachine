@@ -1,16 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChatAltIcon, InformationCircleIcon } from "@heroicons/react/outline";
 import TimeMachineApi from "../../api/TimeMachineApi";
 
 const AvatarCard = (props) => {
+  const nav = useNavigate();
   const convoHandler = async () => {
-    const data = await TimeMachineApi.newConversation(
-      props.avatar.id,
-      props.avatar.starting_prompt
-    );
+    const data = await TimeMachineApi.newConversation(props.avatar.id);
+    nav("conversations/:id");
   };
   return (
-    <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200">
+    <li className="col-span-1 flex flex-col text-center bg-stone-200 rounded-lg shadow divide-y divide-gray-400">
       <div className="flex-1 flex flex-col p-8">
         <img
           className="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
@@ -31,7 +30,7 @@ const AvatarCard = (props) => {
           </dd>
         </dl>
       </div>
-      <div className="-mt-px flex divide-x divide-gray-200">
+      <div className="-mt-px flex divide-x divide-gray-400">
         {/* <form action="" onSubmit={convoHandler}>
           <input type="hidden" name="id" value={props.avatar.id} /> */}
         <div className="w-0 flex-1 flex">

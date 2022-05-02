@@ -1,12 +1,7 @@
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
-import {
-  TrashIcon,
-  DotsVerticalIcon,
-  FlagIcon,
-  StarIcon,
-} from "@heroicons/react/solid";
+import { TrashIcon, DotsVerticalIcon, StarIcon } from "@heroicons/react/solid";
 import TimeMachineApi from "../../api/TimeMachineApi";
 
 function classNames(...classes) {
@@ -15,7 +10,7 @@ function classNames(...classes) {
 const ConvoHistoryCard = (props) => {
   let id = props.convo.id;
   const deleteHandler = async () => {
-    return await TimeMachineApi.deleteConversation(id);
+    await TimeMachineApi.deleteConversation(id);
   };
 
   return (
@@ -30,7 +25,7 @@ const ConvoHistoryCard = (props) => {
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-gray-900">
-            <Link to="conversations/" className="hover:underline">
+            <Link to={`conversations/${id}`} className="hover:underline">
               {props.avatar.name}
             </Link>
           </p>

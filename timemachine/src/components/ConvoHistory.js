@@ -7,16 +7,12 @@ const ConvoHistory = (props) => {
   const [convoList, setConvoList] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  let userData = {
-    id: props.userId,
-  };
-
   useEffect(() => {
     loadConvos();
   }, []);
 
   const loadConvos = async () => {
-    const data = await TimeMachineApi.getUserConversations(userData);
+    const data = await TimeMachineApi.getUserConversations();
     setConvoList(data ? data : []);
   };
 

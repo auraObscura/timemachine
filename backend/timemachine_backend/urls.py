@@ -1,6 +1,5 @@
 from rest_framework import routers
 from django.urls import path, include
-from timemachine_backend.views_auth import handle_login, handle_logout
 from timemachine_backend.views import (
     ConversationViewSet,
     LineViewSet,
