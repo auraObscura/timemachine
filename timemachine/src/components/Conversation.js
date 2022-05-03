@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MailIcon } from "@heroicons/react/solid";
 import Gpt3Api from "../api/Gpt3Api";
-import PollyApi from "../api/PollyApi";
 import TimeMachineApi from "../api/TimeMachineApi";
 
 const Conversation = (props) => {
@@ -13,13 +12,12 @@ const Conversation = (props) => {
     loadLines();
   }, []);
 
-  const loadLines = async () => {
+  const loadLines = async (id) => {
     const data = await TimeMachineApi.getConversationLines(id);
     if (data) {
       return setConvo(data.lines);
     }
   };
-
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
@@ -28,9 +26,8 @@ const Conversation = (props) => {
 
     const res = await Gpt3Api.generate(data);
     if (res) {
-      const output_text = res.choices[0].text;
-      // const output_audio = await PollyApi.synthesize(output_text);
-      setConvo(convo.push(output_text));
+      console.log("New Convrsation Instance", res);
+      setConvo(res.conversation);
     }
   };
 
@@ -42,7 +39,10 @@ const Conversation = (props) => {
             return (
               <div>
                 <p>{`User: ${line.input_text}`}</p>
-                <p>{`Marcus: ${line.output_text}`}</p>
+                <p>{`AI: ${line.output_text}`}</p>
+                <audio controls src={line.audio_url}>
+                  <source src={line.audio_url} type="audio/mpeg" />
+                </audio>
               </div>
             );
           })}

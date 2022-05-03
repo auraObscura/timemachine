@@ -19,7 +19,8 @@ export default function SignInPage(props) {
     if (data) {
       props.setUsername(loginData.username);
       sessionStorage.setItem("access_token", data.access_token);
-      sessionStorage.setItem("user", data.user);
+      sessionStorage.setItem("refresh_token", data.access_token);
+      sessionStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     }
   };

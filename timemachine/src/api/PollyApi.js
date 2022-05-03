@@ -6,11 +6,7 @@ const BASE_URL = "http://localhost:8000/api";
 
 PollyApi.synthesize = async (synthesizeData) => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.post(
-      `${BASE_URL}/speech/`,
-      synthesizeData,
-      apiHelpers.getCsrfConfig()
-    )
+    axios.post(`${BASE_URL}/speech/`, synthesizeData)
   );
 };
 

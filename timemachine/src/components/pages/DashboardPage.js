@@ -40,7 +40,6 @@ export default function DashboardPage(props) {
     const data = await TimeMachineApi.logout();
     if (data) {
       props.setUsername("");
-      props.setUserId(null);
       sessionStorage.removeItem("access_token");
       sessionStorage.removeItem("user");
       nav("/");

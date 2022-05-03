@@ -1,7 +1,8 @@
+from django.http import JsonResponse
 import openai
 import environ
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from timemachine_backend.serializers import ConversationSerializer
 
 from timemachine_backend.aws_api import synthesize
 from .models import Conversation, Line
@@ -39,6 +40,8 @@ def gpt3(request):
         input_text=user_text,
         output_text=output_text,
         conversation=conversation,
-    ).save()
-    synthesize(request, output_text)
-    return Response(response)
+    )
+    next.audio_url = synthesize(output_text, conversation.avatar.voice)
+    next.save()
+    my_data = {"conversation": ConversationSerializer(instance=conversation).data}
+    return JsonResponse(data=my_data, status=200)

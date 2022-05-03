@@ -1,12 +1,10 @@
 from boto3 import Session
-from botocore.exceptions import BotoCoreError, ClientError
-from rest_framework.response import Response
 
 
 MY_BUCKET = "timemachine-tts-output"
 
 
-def synthesize(request, output_text):
+def synthesize(output_text, voice):
     session = Session(profile_name="default")
     polly = session.client("polly")
 
@@ -16,7 +14,8 @@ def synthesize(request, output_text):
         OutputS3BucketName=MY_BUCKET,
         Text=output_text,
         OutputS3KeyPrefix="test",
-        VoiceId="Matthew",
+        VoiceId=voice,
     )
 
-    return Response(response)
+    output_url = response["SynthesisTask"]["OutputUri"]
+    return output_url

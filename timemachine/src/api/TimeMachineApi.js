@@ -8,13 +8,13 @@ const BASE_URL = "http://localhost:8000/api";
 // auth
 TimeMachineApi.login = async (loginData) => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.post(`${TOKEN_BASE}/login/`, loginData, apiHelpers.getCsrfConfig())
+    axios.post(`${TOKEN_BASE}/login/`, loginData)
   );
 };
 
 TimeMachineApi.logout = async () => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.post(`${TOKEN_BASE}/logout/`, apiHelpers.getCsrfConfig())
+    axios.post(`${TOKEN_BASE}/logout/`)
   );
 };
 
@@ -27,44 +27,31 @@ TimeMachineApi.register = async (registerData) => {
 // backend
 TimeMachineApi.getAllAvatars = async () => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.get(
-      `${BASE_URL}/avatars/`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
-        },
+    axios.get(`${BASE_URL}/avatars/`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
       },
-      apiHelpers.getCsrfConfig()
-    )
+    })
   );
 };
 
 TimeMachineApi.getUserConversations = async () => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.get(
-      `${BASE_URL}/conversations/`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
-        },
+    axios.get(`${BASE_URL}/conversations/`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
       },
-      apiHelpers.getCsrfConfig()
-    )
+    })
   );
 };
 
 TimeMachineApi.getConversationLines = async (id) => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.get(
-      `${BASE_URL}/conversations/${id}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
-        },
-        data: { id: id },
+    axios.get(`${BASE_URL}/conversations/${id}/`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
       },
-      apiHelpers.getCsrfConfig()
-    )
+    })
   );
 };
 
@@ -72,8 +59,14 @@ TimeMachineApi.setFavoriteConvo = async (id) => {
   return await apiHelpers.tryCatchFetch(() =>
     axios.patch(
       `${BASE_URL}/conversations/${id}/`,
-      { is_favorite: { is_favorite: true } },
-      apiHelpers.getCsrfConfig()
+      {
+        is_favorite: { is_favorite: true },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      }
     )
   );
 };
@@ -83,22 +76,22 @@ TimeMachineApi.newConversation = async (avatarId) => {
     axios.post(
       `${BASE_URL}/conversations/`,
       { avatar: { id: avatarId } },
-      apiHelpers.getCsrfConfig()
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      }
     )
   );
 };
 
 TimeMachineApi.deleteConversation = async (convoId) => {
   return await apiHelpers.tryCatchFetch(() =>
-    axios.delete(
-      `${BASE_URL}/conversations/${convoId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
-        },
+    axios.delete(`${BASE_URL}/conversations/${convoId}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
       },
-      apiHelpers.getCsrfConfig()
-    )
+    })
   );
 };
 
