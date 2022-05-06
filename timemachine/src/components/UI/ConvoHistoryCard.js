@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import { TrashIcon, DotsVerticalIcon, StarIcon } from "@heroicons/react/solid";
+import { TrashIcon, DotsVerticalIcon } from "@heroicons/react/solid";
 import TimeMachineApi from "../../api/TimeMachineApi";
 
 function classNames(...classes) {

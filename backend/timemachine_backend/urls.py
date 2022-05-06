@@ -19,4 +19,5 @@ urlpatterns = [
     path("", include(r.urls)),
     path("generate/", gpt3, name="generate"),
     path("speech/", synthesize, name="speech"),
+    # path("stream/", stream, name="stream"),
 ]

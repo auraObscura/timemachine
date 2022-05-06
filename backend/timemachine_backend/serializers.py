@@ -68,7 +68,7 @@ class ConversationSerializer(WritableNestedModelSerializer):
             "avatar",
             "lines",
         ]
-        depth = 1
+        depth = 3
 
 
 class UserSerializer(serializers.ModelSerializer):

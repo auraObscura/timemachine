@@ -1,9 +1,8 @@
-from django.http import JsonResponse
 import openai
 import environ
 from rest_framework.decorators import api_view
 from timemachine_backend.serializers import ConversationSerializer
-
+from rest_framework.response import Response
 from timemachine_backend.aws_api import synthesize
 from .models import Conversation, Line
 
@@ -18,8 +17,10 @@ restart_sequence = "\nHuman: "
 @api_view(http_method_names=["POST"])
 def gpt3(request):
     id = request.data.get("id")
+    user = request.user.username
     conversation = Conversation.objects.get(id=id)
-    user_text = request.data.get("user_text")
+    input_text = request.data.get("user_text")
+    user_text = f" {restart_sequence} {input_text}"
     prompt = conversation.avatar.starting_prompt
     if conversation.lines == []:
         Line(input_text=prompt, conversation=conversation).save()
@@ -33,9 +34,9 @@ def gpt3(request):
         top_p=1,
         frequency_penalty=0.3,
         presence_penalty=0.8,
-        stop=[" Human:", " AI:"],
+        stop=[f" Human:", f" {conversation.avatar.name}:"],
     )
-    output_text = response.choices[0].text
+    output_text = response.choices[0].text.split(":")[-1]
     next = Line(
         input_text=user_text,
         output_text=output_text,
@@ -43,5 +44,7 @@ def gpt3(request):
     )
     next.audio_url = synthesize(output_text, conversation.avatar.voice)
     next.save()
-    my_data = {"conversation": ConversationSerializer(instance=conversation).data}
-    return JsonResponse(data=my_data, status=200)
+    my_data = {
+        "conversation": ConversationSerializer(instance=conversation).data,
+    }
+    return Response(data=my_data, status=200)

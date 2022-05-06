@@ -7,27 +7,34 @@ import TimeMachineApi from "../api/TimeMachineApi";
 const Conversation = (props) => {
   const { id } = useParams();
   const [convo, setConvo] = useState([]);
+  const [avatar, setAvatar] = useState();
 
   useEffect(() => {
     loadLines();
   }, []);
 
-  const loadLines = async (id) => {
+  const loadLines = async () => {
     const data = await TimeMachineApi.getConversationLines(id);
     if (data) {
+      setAvatar(data.avatar);
       return setConvo(data.lines);
     }
   };
+
+  const handleMouseOver = (e) => {
+    e.target.load();
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
     const data = new FormData(evt.target);
     data.set("id", id);
-
+    document.getElementById("user_text").value = "";
     const res = await Gpt3Api.generate(data);
     if (res) {
-      console.log("New Convrsation Instance", res);
-      setConvo(res.conversation);
+      console.log("New Convrsation Instance", res.conversation);
+      setConvo(res.conversation.lines);
     }
   };
 
@@ -37,10 +44,17 @@ const Conversation = (props) => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {convo.map((line) => {
             return (
-              <div>
-                <p>{`User: ${line.input_text}`}</p>
-                <p>{`AI: ${line.output_text}`}</p>
-                <audio controls src={line.audio_url}>
+              <div key={line.id} className="">
+                <p className="flex justify-center border-2 rounded-md bg-slate-400 p-1 ml-96">{`${line.input_text}`}</p>
+                <span className="flex-shrink-0">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src={avatar.avatar_img}
+                    alt={avatar.name}
+                  />
+                </span>
+                <p className="flex justify-start border-2 rounded-md p-1 bg-lime-400  max-w-xs">{`${line.conversation.avatar.name}: ${line.output_text}`}</p>
+                <audio id="play" controls onMouseOver={handleMouseOver}>
                   <source src={line.audio_url} type="audio/mpeg" />
                 </audio>
               </div>

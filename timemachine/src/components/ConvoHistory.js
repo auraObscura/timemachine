@@ -17,7 +17,12 @@ const ConvoHistory = (props) => {
   const renderConvos = () => {
     return convoList.map((convo) => {
       return (
-        <ConvoHistoryCard key={convo.id} convo={convo} avatar={convo.avatar} />
+        <ConvoHistoryCard
+          key={convo.id}
+          convo={convo}
+          avatar={convo.avatar}
+          useEffect={useEffect}
+        />
       );
     });
   };

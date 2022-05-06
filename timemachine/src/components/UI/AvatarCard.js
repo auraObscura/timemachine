@@ -31,8 +31,6 @@ const AvatarCard = (props) => {
         </dl>
       </div>
       <div className="-mt-px flex divide-x divide-gray-400">
-        {/* <form action="" onSubmit={convoHandler}>
-          <input type="hidden" name="id" value={props.avatar.id} /> */}
         <div className="w-0 flex-1 flex">
           <Link
             to="#"
@@ -55,7 +53,6 @@ const AvatarCard = (props) => {
             <span className="ml-3">Learn More</span>
           </Link>
         </div>
-        {/* </form> */}
       </div>
     </li>
   );
